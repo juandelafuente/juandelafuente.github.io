@@ -1,0 +1,69 @@
+---
+import ArticlesLayout from '../../layouts/ArticlesLayout.astro';
+
+const descriptions: Record<string, string> = {
+  'malicious-uri-aggregator-and-tracker':
+    'A summary of my Computer Engineering thesis: aggregating malicious URI sources and tracking their evolution.',
+  'virtualenv-in-ubuntu-20-04-3':
+    'Practical notes on installing and using virtualenv and virtualenvwrapper on Ubuntu 20.04.3.',
+  'getting-your-python-package-version':
+    'Ways to retrieve a Python package version in code, including pkg_resources and importlib metadata.',
+  'django-meets-google-secret-manager':
+    'An example of retrieving application secrets and SSL certificates from Google Cloud Secret Manager in Django.',
+  'running-django-manage-py-anywhere':
+    'Using a Python package entry point to run Django management commands from anywhere.',
+};
+
+const modules = import.meta.glob('../../content/articles/*.md', { eager: true });
+
+const articles = Object.entries(modules)
+  .map(([path, module]: [string, any]) => ({
+    slug: path.split('/').pop()!.replace(/\.md$/, ''),
+    ...module.frontmatter,
+  }))
+  .sort(
+    (a, b) =>
+      new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime(),
+  );
+
+const dateFormatter = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+});
+---
+
+<ArticlesLayout
+  title="Articles"
+  description="Technical articles on security engineering, Python, Django, and automation by Juan de la Fuente Costa."
+>
+  <header class="articles-intro">
+    <h1>Articles</h1>
+    <p class="page-intro">
+      Notes, examples, and lessons learned while building software and security
+      capabilities.
+    </p>
+  </header>
+
+  <div class="article-list">
+    {articles.map((article) => (
+      <a class="article-card" href={`/articles/${article.slug}/`}>
+        <time
+          class="article-date"
+          datetime={new Date(article.pubDate).toISOString()}
+        >
+          {dateFormatter.format(new Date(article.pubDate))}
+        </time>
+
+        <div class="article-main">
+          <h2>{article.title}</h2>
+          <p>
+            {descriptions[article.slug] ?? 'A technical article and practical notes.'}
+          </p>
+        </div>
+
+        <span class="article-arrow" aria-hidden="true">→</span>
+      </a>
+    ))}
+  </div>
+</ArticlesLayout>

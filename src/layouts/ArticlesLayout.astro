@@ -1,0 +1,499 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'Articles on security engineering, cyber threat intelligence, Python, and automation.',
+} = Astro.props;
+
+const siteTitle = `${title} | Juan de la Fuente Costa`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f7f4" />
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.ico" />
+    <title>{siteTitle}</title>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="container navigation">
+        <a class="wordmark" href="/" aria-label="Juan de la Fuente Costa, home">
+          <strong>Juan de la Fuente Costa</strong>
+          <span>Security Engineering</span>
+        </a>
+
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="/#expertise">Expertise</a>
+          <a href="/articles/" aria-current="page">Articles</a>
+          <a href="/#about">About</a>
+          <a href="/#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container page-content">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <p>© {new Date().getFullYear()} Juan de la Fuente Costa</p>
+        <a href="/">Back to home ↑</a>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  :global(*) {
+    box-sizing: border-box;
+  }
+
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+
+  :global(body) {
+    margin: 0;
+    background: #f7f7f4;
+    color: #202421;
+    font-family:
+      Inter,
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
+  }
+
+  :global(a) {
+    color: inherit;
+  }
+
+  .container {
+    width: min(1120px, calc(100% - 3rem));
+    margin: 0 auto;
+  }
+
+  /* Header */
+
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    border-bottom: 1px solid #dedfd8;
+    background: rgba(247, 247, 244, 0.94);
+    backdrop-filter: blur(12px);
+  }
+
+  .navigation {
+    min-height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .wordmark {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    text-decoration: none;
+    line-height: 1.1;
+  }
+
+  .wordmark strong {
+    font-size: 0.95rem;
+    letter-spacing: -0.02em;
+  }
+
+  .wordmark span {
+    color: #7a807c;
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .nav-links a {
+    color: #626963;
+    font-size: 0.88rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .nav-links a:hover,
+  .nav-links a[aria-current="page"] {
+    color: #202421;
+  }
+
+  /* Page */
+
+  .page-content {
+    padding-top: 5.5rem;
+    padding-bottom: 7rem;
+  }
+
+  .articles-intro {
+    max-width: 760px;
+    margin-bottom: 4.5rem;
+  }
+
+  .eyebrow {
+    margin: 0 0 1rem;
+    color: #3659d9;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(3.5rem, 8vw, 6rem);
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+    font-weight: 700;
+  }
+
+  .page-intro {
+    max-width: 650px;
+    margin: 1.75rem 0 0;
+    color: #626963;
+    font-size: 1.1rem;
+    line-height: 1.65;
+  }
+
+  /* Article listing */
+
+  .article-list {
+    border-top: 1px solid #dedfd8;
+  }
+
+  .article-card {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr) 30px;
+    gap: 2.5rem;
+    align-items: start;
+    padding: 2.4rem 0;
+    border-bottom: 1px solid #dedfd8;
+    text-decoration: none;
+    transition: padding-left 0.2s ease;
+  }
+
+  .article-card:hover {
+    padding-left: 0.75rem;
+  }
+
+  .article-date {
+    padding-top: 0.35rem;
+    color: #7a807c;
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+
+  .article-main {
+    min-width: 0;
+  }
+
+  .article-main h2 {
+    margin: 0 0 0.8rem;
+    font-size: clamp(1.55rem, 2.5vw, 2.1rem);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    font-weight: 650;
+  }
+
+  .article-main p {
+    max-width: 700px;
+    margin: 0;
+    color: #626963;
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .article-arrow {
+    padding-top: 0.15rem;
+    color: #3659d9;
+    font-size: 1.35rem;
+    transition: transform 0.2s ease;
+  }
+
+  .article-card:hover .article-arrow {
+    transform: translateX(5px);
+  }
+
+  /* Article page */
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 3.5rem;
+    color: #626963;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    color: #3659d9;
+  }
+
+  .article-header {
+    max-width: 850px;
+    margin-bottom: 4rem;
+  }
+
+  .article-header h1 {
+    font-size: clamp(2.8rem, 6vw, 5rem);
+  }
+
+  .article-meta {
+    margin: 1.5rem 0 0;
+    color: #7a807c;
+    font-size: 0.9rem;
+  }
+
+  /*
+   * Article content is generated by <Content />.
+   * It is therefore explicitly global so these rules reach
+   * the generated Markdown/HTML elements.
+   */
+
+  :global(.article-body) {
+    max-width: 760px;
+    font-size: 1.08rem;
+    line-height: 1.8;
+  }
+
+  :global(.article-body h2) {
+    margin: 3.5rem 0 1rem;
+    font-size: 1.8rem;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
+
+  :global(.article-body h3) {
+    margin: 2.75rem 0 0.9rem;
+    font-size: 1.4rem;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+  }
+
+  :global(.article-body h4) {
+    margin: 2.75rem 0 0.75rem;
+    font-size: 1.15rem;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+
+  :global(.article-body p) {
+    margin: 0 0 1.5rem;
+  }
+
+  :global(.article-body a) {
+    color: #3659d9;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  :global(.article-body a:hover) {
+    color: #202421;
+  }
+
+  :global(.article-body ul),
+  :global(.article-body ol) {
+    margin: 1.25rem 0 1.75rem;
+    padding-left: 1.5rem;
+  }
+
+  :global(.article-body li) {
+    margin: 0.45rem 0;
+  }
+
+  /* Inline code */
+
+  :global(.article-body :not(pre) > code) {
+    padding: 0.18rem 0.4rem;
+    border: 1px solid #dedfd8;
+    border-radius: 4px;
+    background: #eeeee9;
+    color: #202421;
+    font-family:
+      "SFMono-Regular",
+      Consolas,
+      "Liberation Mono",
+      monospace;
+    font-size: 0.88em;
+  }
+
+  /* Code blocks */
+
+  :global(.article-body pre) {
+    overflow-x: auto;
+    margin: 2rem 0 2.25rem;
+    padding: 1.25rem 1.4rem;
+    border: 1px solid #d8d9d2;
+    border-radius: 6px;
+    background: #ecece7;
+    color: #202421;
+    font-family:
+      "SFMono-Regular",
+      Consolas,
+      "Liberation Mono",
+      monospace;
+    font-size: 0.86rem;
+    line-height: 1.65;
+    white-space: pre;
+  }
+
+  :global(.article-body pre code) {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font: inherit;
+    color: inherit;
+  }
+
+  /* Blockquotes */
+
+  :global(.article-body blockquote) {
+    margin: 2rem 0;
+    padding: 0.25rem 0 0.25rem 1.5rem;
+    border-left: 3px solid #3659d9;
+    color: #626963;
+  }
+
+  /* Images */
+
+  :global(.article-body figure) {
+    margin: 2.5rem 0;
+  }
+
+  :global(.article-body img) {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    margin: 2.5rem auto;
+  }
+
+  :global(.article-body figcaption) {
+    margin-top: -1.5rem;
+    color: #7a807c;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  /* Tables */
+
+  :global(.article-body table) {
+    width: 100%;
+    margin: 2rem 0;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+  }
+
+  :global(.article-body th),
+  :global(.article-body td) {
+    padding: 0.75rem;
+    border-bottom: 1px solid #dedfd8;
+    text-align: left;
+  }
+
+  :global(.article-body th) {
+    font-weight: 650;
+  }
+
+  /* Footer */
+
+  .site-footer {
+    border-top: 1px solid #dedfd8;
+  }
+
+  .footer-content {
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    color: #7a807c;
+    font-size: 0.82rem;
+  }
+
+  .footer-content p {
+    margin: 0;
+  }
+
+  .footer-content a {
+    text-decoration: none;
+  }
+
+  .footer-content a:hover {
+    color: #3659d9;
+  }
+
+  @media (max-width: 700px) {
+    .container {
+      width: min(100% - 2rem, 1120px);
+    }
+
+    .navigation {
+      min-height: 68px;
+    }
+
+    .nav-links {
+      gap: 0.8rem;
+    }
+
+    .nav-links a:nth-child(-n + 2),
+    .nav-links a:nth-child(4),
+    .nav-links a:nth-child(5) {
+      display: none;
+    }
+
+    .page-content {
+      padding-top: 3.5rem;
+      padding-bottom: 5rem;
+    }
+
+    .articles-intro {
+      margin-bottom: 3rem;
+    }
+
+    .article-card {
+      grid-template-columns: 1fr 24px;
+      gap: 0.4rem 1rem;
+      padding: 1.75rem 0;
+    }
+
+    .article-date {
+      grid-column: 1 / -1;
+      padding-top: 0;
+    }
+
+    .article-main h2 {
+      font-size: 1.45rem;
+    }
+
+    .article-main p {
+      font-size: 0.95rem;
+    }
+
+    .footer-content {
+      min-height: 70px;
+    }
+  }
+</style>

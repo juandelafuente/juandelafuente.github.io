@@ -1,0 +1,6 @@
+---
+title: "Getting your Python package version"
+pubDate: 2021-12-20
+---
+
+<p>While debugging, deployment or during your DevSecOps strategy you want to print, write to a log, or whatever, your package version.</p><p>I have been dealing with this stuff for long, and I’m typically using the next approach using <strong>pkg_resources</strong>:</p><iframe src="" width="0" height="0" frameborder="0" scrolling="no"><a href="https://medium.com/media/c5f554204322d0f708f05a7374e9cd02/href">https://medium.com/media/c5f554204322d0f708f05a7374e9cd02/href</a></iframe><p>The package is expected to be installed using a <strong>setup.py</strong> containing name value as <strong>mysamplepackage</strong> in this example.</p><p>Remember to import pkg_resources in order to use this function.</p><pre>import pkg_resources</pre><p>You can also use, for <em>modern</em> Python versions, distribution functions from importlib_metadata package</p><pre> from importlib_metadata import distribution</pre><p>It works in a similar way so the code would be</p><iframe src="" width="0" height="0" frameborder="0" scrolling="no"><a href="https://medium.com/media/88b60b46b08399df92f97c96f2eb71bc/href">https://medium.com/media/88b60b46b08399df92f97c96f2eb71bc/href</a></iframe><p>What’s your way? More on <a href="https://twitter.com/jdelafuente">https://twitter.com/jdelafuente</a></p>

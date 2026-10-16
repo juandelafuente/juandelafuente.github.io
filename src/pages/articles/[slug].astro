@@ -1,0 +1,43 @@
+---
+import ArticlesLayout from '../../layouts/ArticlesLayout.astro';
+
+const modules = import.meta.glob('../../content/articles/*.md', { eager: true });
+
+export async function getStaticPaths() {
+  const modules = import.meta.glob('../../content/articles/*.md', { eager: true });
+
+  return Object.entries(modules).map(([path, module]: [string, any]) => ({
+    params: {
+      slug: path.split('/').pop()!.replace(/\.md$/, ''),
+    },
+    props: {
+      article: module,
+    },
+  }));
+}
+
+const { article } = Astro.props;
+const { Content, frontmatter } = article;
+const date = new Date(frontmatter.pubDate);
+const dateLabel = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(date);
+---
+
+<ArticlesLayout title={frontmatter.title}>
+  <a class="back-link" href="/articles/">← All articles</a>
+
+  <header class="article-header">
+    <h1>{frontmatter.title}</h1>
+    <p class="article-meta">
+      Published <time datetime={date.toISOString()}>{dateLabel}</time>
+    </p>
+  </header>
+
+  <article class="article-body">
+    <Content />
+  </article>
+
+</ArticlesLayout>

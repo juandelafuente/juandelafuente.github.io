@@ -116,9 +116,32 @@ const description =
         color: var(--accent);
       }
 
-      .hero {
-        padding-block: clamp(28px, 4vw, 48px) 80px;
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(0, 0.5fr);
+  align-items: center;
+  gap: clamp(20px, 2.5vw, 32px);
+  padding-block: clamp(28px, 4vw, 48px) 80px;
+}
+
+      .hero-content {
+        min-width: 0;
       }
+
+.hero-visual {
+  min-width: 0;
+  width: 100%;
+  max-width: 260px;
+  justify-self: end;
+}
+
+.hero-visual img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
 
       .eyebrow {
         display: flex;
@@ -146,28 +169,28 @@ const description =
         margin-top: 0;
       }
 
-      h1 {
-        width: 100%;
-        max-width: 1040px;
-        margin-bottom: 30px;
-        font-size: clamp(2.3rem, 5.6vw, 5rem);
-        font-weight: 650;
-        letter-spacing: -0.035em;
-        line-height: 1.08;
-        text-wrap: balance;
-      }
+h1 {
+  width: 100%;
+  max-width: 1040px;
+  margin-bottom: 30px;
+  font-size: clamp(2rem, 3.8vw, 3.6rem);
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
 
       .hero h1 span {
         color: var(--accent);
       }
 
-      .hero-copy {
-        max-width: 880px;
-        margin-bottom: 34px;
-        color: var(--muted);
-        font-size: clamp(1rem, 1.6vw, 1.12rem);
-        line-height: 1.85;
-      }
+.hero-copy {
+  max-width: 880px;
+  margin-bottom: 34px;
+  color: var(--muted);
+  font-size: clamp(0.95rem, 1.05vw, 1.05rem);
+  line-height: 1.8;
+}
 
       .text-link {
         display: inline-flex;
@@ -251,7 +274,11 @@ const description =
         line-height: 1.35;
       }
 
-      .expertise-card p,
+      .expertise-card p {
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
 
       .work-type {
         margin-bottom: 10px;
@@ -431,10 +458,12 @@ const description =
         }
 
         .hero {
-          padding-block: 24px 56px;
+          grid-template-columns: minmax(0, 1fr);
+          gap: 32px;
+          padding-block: 32px 56px;
         }
-
-        .section,
+	
+	.section,
         .contact {
           padding-block: 75px;
         }
@@ -474,6 +503,17 @@ const description =
         }
       }
 
+	@media (min-width: 761px) and (max-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 32px;
+      }
+
+      .hero-visual {
+        max-width: 620px;
+      }
+    }
+
       @media (prefers-reduced-motion: reduce) {
         html {
           scroll-behavior: auto;
@@ -512,21 +552,29 @@ const description =
     </header>
 
     <main id="top">
-      <section class="container hero" aria-labelledby="hero-title">
-        <p class="eyebrow">
-          Application Security · Threat Intelligence · Automation
-        </p>
-
-        <h1 id="hero-title">
-          Security engineering that turns complex problems into&nbsp;<span>actionable decisions.</span>
-        </h1>
-
-        <p class="hero-copy">
-          I'm Juan, a security engineer focused on building practical
-          capabilities that help teams understand risk, make better decisions,
-          and integrate security into the way they build software.
-        </p>
-      </section>
+	<section class="container hero" aria-labelledby="hero-title">
+	  <div class="hero-content">
+	    <p class="eyebrow">
+	      Application Security · Threat Intelligence · Automation
+	    </p>
+	
+	    <h1 id="hero-title">
+	      Security engineering that turns complex problems into&nbsp;<span>actionable decisions.</span>
+	    </h1>
+	
+	    <p class="hero-copy">
+	      I'm Juan, a security engineer focused on building practical
+	      capabilities that help teams understand risk, make better decisions,
+	      and integrate security into the way they build software.
+	    </p>
+	  </div>
+	
+	  <div class="hero-visual">
+	<img src="/images/security-engineering-overview.png"
+  		alt="Abstract representation of security engineering, automation, and connected security capabilities"
+	/>  
+	</div>
+	</section>
 
       <section class="section" id="expertise" aria-labelledby="expertise-title">
         <div class="container">

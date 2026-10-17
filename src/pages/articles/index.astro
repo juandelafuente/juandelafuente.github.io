@@ -38,7 +38,7 @@ const dateFormatter = new Intl.DateTimeFormat('en-GB', {
   description="Technical articles on security engineering, Python, Django, and automation by Juan de la Fuente Costa."
 >
   <header class="articles-intro">
-    <h1>Articles</h1>
+    <p class="eyebrow">04 / ARTICLES</p>
     <p class="page-intro">
       Notes, examples, and lessons learned while building software and security
       capabilities.
@@ -46,24 +46,32 @@ const dateFormatter = new Intl.DateTimeFormat('en-GB', {
   </header>
 
   <div class="article-list">
-    {articles.map((article) => (
-      <a class="article-card" href={`/articles/${article.slug}/`}>
-        <time
-          class="article-date"
-          datetime={new Date(article.pubDate).toISOString()}
-        >
-          {dateFormatter.format(new Date(article.pubDate))}
-        </time>
+    {articles.map((article, index) => (
+      <article class="article-card">
+        <span class="article-number" aria-hidden="true">
+          {String(index + 1).padStart(2, '0')}
+        </span>
 
         <div class="article-main">
-          <h2>{article.title}</h2>
+          <h2>
+            <a class="article-title" href={`/articles/${article.slug}/`}>
+              {article.title}
+              <span class="article-arrow" aria-hidden="true">↗</span>
+            </a>
+          </h2>
+
           <p>
             {descriptions[article.slug] ?? 'A technical article and practical notes.'}
           </p>
-        </div>
 
-        <span class="article-arrow" aria-hidden="true">→</span>
-      </a>
+          <time
+            class="article-date"
+            datetime={new Date(article.pubDate).toISOString()}
+          >
+            {dateFormatter.format(new Date(article.pubDate)).toUpperCase()}
+          </time>
+        </div>
+      </article>
     ))}
   </div>
 </ArticlesLayout>
